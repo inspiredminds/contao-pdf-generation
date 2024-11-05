@@ -1,0 +1,17 @@
+<?php $this->extend('fe_page'); ?>
+
+<?php $this->block('head'); ?>
+  <?php if ($this->charset): ?>
+    <meta charset="<?= $this->charset ?>">
+  <?php endif; ?>
+  <?php if ($this->title): ?>
+    <title><?= $this->title ?></title>
+  <?php endif; ?>
+  <?php if ($this->base): ?>
+    <base href="<?= $this->base ?>">
+  <?php endif; ?>
+  <?= $this->framework ?>
+  <?= $this->stylesheets ?>
+  <?= $this->mooScripts ?>
+  <?= $this->head ?>
+<?php $this->endblock(); ?>
