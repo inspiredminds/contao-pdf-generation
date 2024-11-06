@@ -2,6 +2,11 @@ services:
     _defaults:
         autoconfigure: true
         autowire: true
+        bind:
+            $pdfGenerationConfigs: '%contao_pdf_generation.configurations%'
 
     InspiredMinds\ContaoPdfGeneration\:
         resource: ../src
+
+    InspiredMinds\ContaoPdfGeneration\EventListener\GeneratePdfListener:
+        tags: [kernel.event_listener]

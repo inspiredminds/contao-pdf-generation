@@ -26,6 +26,6 @@ class ContaoPdfGenerationExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        dump($config);
+        $container->setParameter('contao_pdf_generation.configurations', $config['configurations'] ?? []);
     }
 }

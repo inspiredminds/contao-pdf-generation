@@ -1,0 +1,11 @@
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+  <form method="post">
+    <?php if ($this->requestToken): ?>
+      <input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
+    <?php endif; ?>
+    <input type="hidden" name="<?= $this->triggerParam ?>" value="">
+    <button type="submit"><?= $this->trans('MSC.generatePdf') ?></button>
+  </form>
+<?php $this->endblock(); ?>

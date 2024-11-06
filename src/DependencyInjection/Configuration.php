@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the Contao Extended Cache Controls extension.
+ *
+ * (c) INSPIRED MINDS
+ */
+
 namespace InspiredMinds\ContaoPdfGeneration\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -25,9 +33,9 @@ class Configuration implements ConfigurationInterface
                             ->arrayNode('custom_format')
                                 ->info('Custom format in millimeters. Overrides the regular format.')
                                 ->children()
-                                    ->scalarNode('width')
+                                    ->integerNode('width')
                                     ->end()
-                                    ->scalarNode('height')
+                                    ->integerNode('height')
                                     ->end()
                                 ->end()
                             ->end()
@@ -36,14 +44,16 @@ class Configuration implements ConfigurationInterface
                                 ->defaultValue('P')
                                 ->values(['P', 'L'])
                                 ->beforeNormalization()
-                                    ->always(function (string $v): string { return match ($v) { 'portrait' => 'P', 'landscape' => 'L', default => $v }; })
+                                    ->always(static fn (string $v): string => match ($v) {
+                                        'portrait' => 'P', 'landscape' => 'L', default => $v
+                                    })
                                 ->end()
                             ->end()
                             ->arrayNode('fonts')
                                 ->children()
                                     ->scalarNode('default_font')
                                     ->end()
-                                    ->scalarNode('default_size')
+                                    ->integerNode('default_size')
                                     ->end()
                                     ->arrayNode('custom_fonts')
                                         ->useAttributeAsKey('name')
@@ -72,15 +82,17 @@ class Configuration implements ConfigurationInterface
                                             ->end()
                                         ->end()
                                         ->beforeNormalization()
-                                            ->always(function (array $fonts): array {
-                                                $normalized = [];
+                                            ->always(
+                                                static function (array $fonts): array {
+                                                    $normalized = [];
 
-                                                foreach ($fonts as $k => $v) {
-                                                    $normalized[strtolower($k)] = $v;
+                                                    foreach ($fonts as $k => $v) {
+                                                        $normalized[strtolower($k)] = $v;
+                                                    }
+
+                                                    return $normalized;
                                                 }
-
-                                                return $normalized;
-                                            })
+                                            )
                                         ->end()
                                     ->end()
                                 ->end()
@@ -101,6 +113,9 @@ class Configuration implements ConfigurationInterface
                                     ->scalarNode('footer')
                                     ->end()
                                 ->end()
+                            ->end()
+                            ->scalarNode('template')
+                                ->defaultValue('fe_page_mpdf')
                             ->end()
                         ->end()
                     ->end()

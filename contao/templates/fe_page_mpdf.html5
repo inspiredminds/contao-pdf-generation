@@ -15,3 +15,15 @@
   <?= $this->mooScripts ?>
   <?= $this->head ?>
 <?php $this->endblock(); ?>
+
+<?php $this->block('header'); ?>
+<?php $this->endblock(); ?>
+
+<?php $this->block('left'); ?>
+<?php $this->endblock(); ?>
+
+<?php $this->block('right'); ?>
+<?php $this->endblock(); ?>
+
+<?php $this->block('footer'); ?>
+<?php $this->endblock(); ?>
