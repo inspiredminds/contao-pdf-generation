@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace InspiredMinds\ContaoPdfGeneration\EventListener\DataContainer;
 
 use Contao\CoreBundle\ServiceAnnotation\Callback;

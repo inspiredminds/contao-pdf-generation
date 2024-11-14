@@ -9,4 +9,5 @@ services:
         resource: ../src
 
     InspiredMinds\ContaoPdfGeneration\EventListener\GeneratePdfListener:
-        tags: [kernel.event_listener]
+        tags: 
+            - { name: kernel.event_listener, priority: 1 }

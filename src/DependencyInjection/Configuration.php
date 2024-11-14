@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Contao Extended Cache Controls extension.
- *
- * (c) INSPIRED MINDS
- */
-
 namespace InspiredMinds\ContaoPdfGeneration\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -114,8 +108,8 @@ class Configuration implements ConfigurationInterface
                                     ->end()
                                 ->end()
                             ->end()
-                            ->scalarNode('template')
-                                ->defaultValue('fe_page_mpdf')
+                            ->scalarNode('page_template')
+                                ->defaultValue('pdf_default')
                             ->end()
                         ->end()
                     ->end()

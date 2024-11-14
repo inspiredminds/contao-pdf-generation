@@ -1,5 +1,12 @@
 <?php $this->extend('fe_page'); ?>
 
+<?php
+
+$this->mootools = null;
+$this->jsonLdScripts = null;
+
+?>
+
 <?php $this->block('head'); ?>
   <?php if ($this->charset): ?>
     <meta charset="<?= $this->charset ?>">
@@ -12,18 +19,9 @@
   <?php endif; ?>
   <?= $this->framework ?>
   <?= $this->stylesheets ?>
-  <?= $this->mooScripts ?>
   <?= $this->head ?>
 <?php $this->endblock(); ?>
 
-<?php $this->block('header'); ?>
-<?php $this->endblock(); ?>
-
-<?php $this->block('left'); ?>
-<?php $this->endblock(); ?>
-
-<?php $this->block('right'); ?>
-<?php $this->endblock(); ?>
-
-<?php $this->block('footer'); ?>
+<?php $this->block('body'); ?>
+  <?= $this->main ?>
 <?php $this->endblock(); ?>
