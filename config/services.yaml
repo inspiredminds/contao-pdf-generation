@@ -7,7 +7,4 @@ services:
 
     InspiredMinds\ContaoPdfGeneration\:
         resource: ../src
-
-    InspiredMinds\ContaoPdfGeneration\EventListener\GeneratePdfListener:
-        tags: 
-            - { name: kernel.event_listener, priority: 1 }
+        exclude: ../src/{ContaoManager,DependencyInjection,ContaoPdfGenerationBundle.php}

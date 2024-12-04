@@ -2,20 +2,21 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Contao PDF Generation extension.
+ *
+ * (c) INSPIRED MINDS
+ */
+
 namespace InspiredMinds\ContaoPdfGeneration\EventListener\DataContainer;
 
-use Contao\CoreBundle\ServiceAnnotation\Callback;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 
-/** 
- * @Callback(table="tl_layout", target="fields.pdfGenerationConfig.options")
- */
+#[AsCallback('tl_layout', 'fields.pdfGenerationConfig.options')]
 class LayoutPdfGenerationConfigOptionsListener
 {
-    private array $pdfGenerationConfigs;
-
-    public function __construct(array $pdfGenerationConfigs)
+    public function __construct(private readonly array $pdfGenerationConfigs)
     {
-        $this->pdfGenerationConfigs = $pdfGenerationConfigs;
     }
 
     public function __invoke(): array

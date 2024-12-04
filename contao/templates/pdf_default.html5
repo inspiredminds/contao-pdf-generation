@@ -23,5 +23,7 @@ $this->jsonLdScripts = null;
 <?php $this->endblock(); ?>
 
 <?php $this->block('body'); ?>
+  <?= $this->header ?>
   <?= $this->main ?>
+  <?= $this->footer ?>
 <?php $this->endblock(); ?>

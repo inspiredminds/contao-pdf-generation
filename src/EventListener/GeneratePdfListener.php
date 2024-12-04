@@ -2,25 +2,33 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Contao PDF Generation extension.
+ *
+ * (c) INSPIRED MINDS
+ */
+
 namespace InspiredMinds\ContaoPdfGeneration\EventListener;
 
 use Contao\CoreBundle\Slug\Slug;
 use InspiredMinds\ContaoPdfGeneration\ContaoPdfGenerationBundle;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
+use Mpdf\Mpdf;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
+#[AsEventListener(priority: 1)]
 class GeneratePdfListener
 {
-    private array $pdfGenerationConfigs;
-    private Slug $slugGenerator;
-
-    public function __construct(array $pdfGenerationConfigs, Slug $slugGenerator)
-    {
-        $this->pdfGenerationConfigs = $pdfGenerationConfigs;
-        $this->slugGenerator = $slugGenerator;
+    public function __construct(
+        private array $pdfGenerationConfigs,
+        private readonly Slug $slugGenerator,
+    ) {
     }
 
     public function __invoke(ResponseEvent $event): void
@@ -40,29 +48,29 @@ class GeneratePdfListener
         if (!$configKey || !($config = ($this->pdfGenerationConfigs[$configKey] ?? null))) {
             return;
         }
-        
+
         // Configure fonts
-        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $defaultConfig = (new ConfigVariables())->getDefaults();
         $fontDirs = $defaultConfig['fontDir'];
-        
-        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+
+        $defaultFontConfig = (new FontVariables())->getDefaults();
         $fontData = $defaultFontConfig['fontdata'];
-        
+
         foreach ($config['fonts']['custom_fonts'] ?? [] as $fontName => $fontConfig) {
             foreach ($fontConfig as $variant => $path) {
-                $pathInfo = pathinfo($path);
+                $pathInfo = pathinfo((string) $path);
                 $fontDir = Path::normalize($pathInfo['dirname']);
 
-                if (false === array_search($fontDir, $fontDirs)) {
+                if (false === array_search($fontDir, $fontDirs, true)) {
                     $fontDirs[] = $fontDir;
                 }
 
-                $fontData[strtolower($fontName)][strtoupper($variant)] = $pathInfo['basename'];
+                $fontData[strtolower((string) $fontName)][strtoupper((string) $variant)] = $pathInfo['basename'];
             }
         }
 
         // Initialize PDF
-        $pdf = new \Mpdf\Mpdf([
+        $pdf = new Mpdf([
             'fontDir' => $fontDirs,
             'fontdata' => $fontData,
             'format' => $config['custom_format'] ?? $config['format'] ?? null,
@@ -123,6 +131,6 @@ class GeneratePdfListener
         $response->headers->set('Content-Disposition', $disposition);
 
         $event->setResponse($response);
-        $event->stopPropagation();      
+        $event->stopPropagation();
     }
 }

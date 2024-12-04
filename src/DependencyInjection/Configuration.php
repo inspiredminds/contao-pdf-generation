@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Contao PDF Generation extension.
+ *
+ * (c) INSPIRED MINDS
+ */
+
 namespace InspiredMinds\ContaoPdfGeneration\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -39,7 +45,7 @@ class Configuration implements ConfigurationInterface
                                 ->values(['P', 'L'])
                                 ->beforeNormalization()
                                     ->always(static fn (string $v): string => match ($v) {
-                                        'portrait' => 'P', 'landscape' => 'L', default => $v
+                                        'portrait' => 'P', 'landscape' => 'L', default => $v,
                                     })
                                 ->end()
                             ->end()
@@ -50,11 +56,13 @@ class Configuration implements ConfigurationInterface
                                     ->integerNode('default_size')
                                     ->end()
                                     ->arrayNode('custom_fonts')
+                                        ->info('Here you can define custom fonts and the path to their TTF files (https://mpdf.github.io/fonts-languages/fonts-in-mpdf-7-x.html).')
                                         ->useAttributeAsKey('name')
                                         ->arrayPrototype()
                                             ->children()
                                                 ->scalarNode('R')
                                                     ->info('Path to the regular version of the font.')
+                                                    ->example('%kernel.project_dir%/pdf/foo.ttf')
                                                 ->end()
                                                 ->scalarNode('B')
                                                     ->info('Path to the bold version of the font.')
@@ -85,7 +93,7 @@ class Configuration implements ConfigurationInterface
                                                     }
 
                                                     return $normalized;
-                                                }
+                                                },
                                             )
                                         ->end()
                                     ->end()
@@ -109,7 +117,16 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                             ->scalarNode('page_template')
+                                ->info('Replaces the template of the page layout.')
                                 ->defaultValue('pdf_default')
+                            ->end()
+                            ->scalarNode('pdf_template')
+                                ->info('Specifies an external PDF file to use as a template (https://mpdf.github.io/reference/mpdf-functions/setdoctemplate.html).')
+                                ->example('%kernel.project_dir%/pdf/template.pdf')
+                            ->end()
+                            ->scalarNode('pdf_appendix')
+                                ->info('Specifies an external PDF file to use as an appendix.')
+                                ->example('%kernel.project_dir%/pdf/appendix.pdf')
                             ->end()
                         ->end()
                     ->end()

@@ -21,7 +21,7 @@ return ECSConfig::configure()
         CommentLengthFixer::class => ['*'],
     ])
     ->withConfiguredRule(HeaderCommentFixer::class, [
-        'header' => "This file is part of the Contao Extended Cache Controls extension.\n\n(c) INSPIRED MINDS",
+        'header' => "This file is part of the Contao PDF Generation extension.\n\n(c) INSPIRED MINDS",
     ])
     ->withParallel()
     ->withSpacing(lineEnding: "\n")
