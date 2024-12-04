@@ -27,7 +27,6 @@
         "contao/core-bundle": "^4.13 || ^5.0",
         "symfony/config": "^5.4 || ^6.4 || ^7.1",
         "symfony/dependency-injection": "^5.4 || ^6.4 || ^7.1",
-        "symfony/event-dispatcher": "^5.4 || ^6.4 || ^7.1",
         "symfony/http-foundation": "^5.4 || ^6.4 || ^7.1",
         "symfony/http-kernel": "^5.4 || ^6.4 || ^7.1",
         "mpdf/mpdf": "^8.2"
