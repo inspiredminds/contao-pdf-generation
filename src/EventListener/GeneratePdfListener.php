@@ -71,6 +71,7 @@ class GeneratePdfListener
 
         // Initialize PDF
         $pdf = new Mpdf([
+            'mode' => 'utf-8',
             'fontDir' => $fontDirs,
             'fontdata' => $fontData,
             'format' => $config['custom_format'] ?? $config['format'] ?? null,
@@ -96,9 +97,6 @@ class GeneratePdfListener
         if ($pdfTemplate = ($config['pdf_template'] ?? null)) {
             $pdf->SetDocTemplate(Path::normalize($pdfTemplate), true);
         }
-
-        // Initialize document and add a page
-        $pdf->AddPage();
 
         // Write the HTML content
         $pdf->WriteHTML($event->getResponse()->getContent());
