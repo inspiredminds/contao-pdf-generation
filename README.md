@@ -17,7 +17,30 @@ contao_pdf_generation:
         my_pdf_config: ~
 ```
 
-Otherwise check the output of `config:dump-reference contao_pdf_generation` for more options.
+To use a PDF template, you can define the absolute path to the template like this for example:
+
+```yaml
+contao_pdf_generation:
+    configurations:
+        my_pdf_config:
+            pdf_template: '%kernel.project_dir%/files/pdf/my_pdf_template.pdf'
+```
+
+To integrate a custom font, you also need to define the absolute path to the font files:
+
+```yaml
+contao_pdf_generation:
+    configurations:
+        my_pdf_config:
+            fonts:
+                default_font: foobar
+                custom_fonts:
+                    foobar:
+                        R: '%kernel.project_dir%/files/pdf/Foobar-Regular.ttf'
+                        B: '%kernel.project_dir%/files/pdf/Foobar-Bold.ttf'
+```
+
+check the output of `config:dump-reference contao_pdf_generation` for more options.
 
 Next you will have to select a PDF generation configuration in your Contao page layout. You can find this in the
 _Expert settings_ tab of your layout under **PDF generation configuration**. Only pages with a valid PDF generation
@@ -26,3 +49,6 @@ configuration layout will be able to actually generate a PDF.
 Next you will have to create a _Generate PDF_ front end module in your theme. This module will output a form with a
 submit button that will trigger the PDF generation for the current page. Insert this module then either in your layout,
 or directly in your content somewhere.
+
+> [!NOTE]
+> At the moment this extension is not compatible with the modern Twig page layouts of Contao 5.6+.

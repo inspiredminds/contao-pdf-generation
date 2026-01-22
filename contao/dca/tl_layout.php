@@ -16,7 +16,13 @@ $GLOBALS['TL_DCA']['tl_layout']['fields']['pdfGenerationConfig'] = [
     'sql' => ['type' => 'string', 'length' => 64, 'default' => ''],
 ];
 
-PaletteManipulator::create()
-    ->addField('pdfGenerationConfig', 'expert_legend', PaletteManipulator::POSITION_APPEND)
-    ->applyToPalette('default', 'tl_layout')
-;
+foreach ($GLOBALS['TL_DCA']['tl_layout']['palettes'] as $name => $palette) {
+    if (!\is_string($palette)) {
+        continue;
+    }
+
+    PaletteManipulator::create()
+        ->addField('pdfGenerationConfig', 'expert_legend', PaletteManipulator::POSITION_APPEND)
+        ->applyToPalette($name, 'tl_layout')
+    ;
+}
