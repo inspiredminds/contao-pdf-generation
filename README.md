@@ -46,9 +46,9 @@ Next you will have to select a PDF generation configuration in your Contao page 
 _Expert settings_ tab of your layout under **PDF generation configuration**. Only pages with a valid PDF generation
 configuration layout will be able to actually generate a PDF.
 
-Next you will have to create a _Generate PDF_ front end module in your theme. This module will output a form with a
-submit button that will trigger the PDF generation for the current page. Insert this module then either in your layout,
-or directly in your content somewhere.
+Next you will have to create a _Generate PDF_ content element. This element will output a form with a submit button that
+will trigger the PDF generation for the current page. Insert this element then either in your layout, or directly in
+your content somewhere.
 
 > [!NOTE]
-> At the moment this extension is not compatible with the modern Twig page layouts of Contao 5.6+.
+> If you need support for default layouts, install version **1.x** of this extension.

@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace InspiredMinds\ContaoPdfGeneration\DependencyInjection;
 
+use InspiredMinds\ContaoPdfGeneration\ContaoPdfGeneration;
+use InspiredMinds\ContaoPdfGeneration\EventListener\DataContainer\LayoutPdfGenerationConfigOptionsListener;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -19,13 +21,27 @@ class ContaoPdfGenerationExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $pdfGenerationConfigs = $config['configurations'] ?? [];
+
+        if (!$pdfGenerationConfigs) {
+            return;
+        }
+
         (new YamlFileLoader($container, new FileLocator(__DIR__.'/../../config')))
             ->load('services.yaml')
         ;
 
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $container
+            ->getDefinition(LayoutPdfGenerationConfigOptionsListener::class)
+            ->setArgument('$pdfGenerationConfigs', $pdfGenerationConfigs)
+        ;
 
-        $container->setParameter('contao_pdf_generation.configurations', $config['configurations'] ?? []);
+        $container
+            ->getDefinition(ContaoPdfGeneration::class)
+            ->setArgument('$pdfGenerationConfigs', $pdfGenerationConfigs)
+        ;
     }
 }

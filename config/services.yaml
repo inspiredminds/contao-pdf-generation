@@ -2,9 +2,7 @@ services:
     _defaults:
         autoconfigure: true
         autowire: true
-        bind:
-            $pdfGenerationConfigs: '%contao_pdf_generation.configurations%'
 
     InspiredMinds\ContaoPdfGeneration\:
         resource: ../src
-        exclude: ../src/{ContaoManager,DependencyInjection,ContaoPdfGenerationBundle.php}
+        exclude: ../src/{ContaoManager,DependencyInjection,Mpdf,ContaoPdfGenerationBundle.php}

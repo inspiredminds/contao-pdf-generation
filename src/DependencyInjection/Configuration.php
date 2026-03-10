@@ -118,7 +118,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                             ->scalarNode('page_template')
                                 ->info('Replaces the template of the page layout.')
-                                ->defaultValue('pdf_default')
+                                ->defaultValue('pdf/default')
                             ->end()
                             ->scalarNode('pdf_template')
                                 ->info('Specifies an external PDF file to use as a template (https://mpdf.github.io/reference/mpdf-functions/setdoctemplate.html).')

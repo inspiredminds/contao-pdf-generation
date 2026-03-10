@@ -1,0 +1,6 @@
+MSC:
+    generatePdf: Generate PDF
+CTE:
+    generate_pdf:
+        - Generate PDF
+        - Renders a form that can trigger the PDF generation.

@@ -1,0 +1,46 @@
+{%- set html_attributes = attrs()
+    .set('lang', locale)
+    .set('dir', 'rtl', rtl)
+    .mergeWith(html_attributes|default)
+-%}
+
+<!DOCTYPE html>
+<html{{ html_attributes|default }}>
+<head>
+{% block head %}
+    <meta charset="UTF-8">
+    {% defer %}
+        {% block title %}
+            {% set title = response_context.head.title|default %}
+            {% if title and contao.page.rootPageTitle|default %}
+                {% set title = title ~ ' - ' ~ contao.page.rootPageTitle %}
+            {% endif %}
+             <title>{{ title }}</title>
+        {% endblock %}
+    {% enddefer %}
+{% endblock %}
+</head>
+
+
+{% set body_attributes = attrs()
+    .addClass(contao.page.cssClass|default)
+    .mergeWith(body_attributes|default)
+%}
+<body{{ body_attributes|default }}>
+{% block body %}
+    {% block body_content %}
+        {% slot header %}
+            <header>{{ slot() }}</header>
+        {% endslot %}
+
+        {% slot main %}
+            <main>{{ slot() }}</main>
+        {% endslot %}
+
+        {% slot footer %}
+            <footer>{{ slot() }}</footer>
+        {% endslot %}
+    {% endblock %}
+{% endblock %}
+</body>
+</html>

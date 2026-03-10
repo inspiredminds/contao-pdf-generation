@@ -1,0 +1,6 @@
+MSC:
+    generatePdf: PDF erzeugen
+CTE:
+    generate_pdf:
+        - PDF erzeugen
+        - Zeigt ein Formular an mit dem die PDF-Erzeugung ausgelöst werden kann.

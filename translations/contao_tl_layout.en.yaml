@@ -1,0 +1,4 @@
+tl_layout:
+    pdfGenerationConfig: 
+        - PDF generation configuration
+        - Choose a configuration for the PDF generation.
