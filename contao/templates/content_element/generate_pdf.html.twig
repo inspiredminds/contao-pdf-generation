@@ -1,7 +1,11 @@
 {% extends '@Contao/content_element/_base.html.twig' %}
 
 {% block content %}
-    <form method="post">
+    {% set form_attributes = attrs()
+        .set('method', 'post')
+        .mergeWith(form_attributes|default)
+    %}
+    <form{{ form_attributes }}>
         <input type="hidden" name="REQUEST_TOKEN" value="{{ contao.request_token }}">
         <input type="hidden" name="{{ trigger_param }}" value="">
         <button type="submit">{{ 'MSC.generatePdf'|trans({}, 'contao_default') }}</button>
